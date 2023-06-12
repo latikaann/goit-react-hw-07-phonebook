@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import css from '../ContactList/ContactList.module.css';
 import ContactListItem from './ContactListItem';
 import { useSelector } from 'react-redux';

@@ -1,4 +1,5 @@
 import { combineReducers, createSlice } from '@reduxjs/toolkit';
+import { contactsApi } from 'contactsApi/contactsApi';
 
 const contactsInitialState = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -8,7 +9,7 @@ const contactsInitialState = [
 ];
 
 const contactsSlice = createSlice({
-  name: 'contacts',
+  name: 'contactsList',
   initialState: contactsInitialState,
   reducers: {
     addContact: (state, action) => {
@@ -41,4 +42,5 @@ export const filterReducer = filterSlice.reducer;
 export const reducer = combineReducers({
   contacts: contactsReducer,
   filter: filterReducer,
+  [contactsApi.reducerPath]: contactsApi.reducer,
 });

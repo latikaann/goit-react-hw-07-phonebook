@@ -1,17 +1,15 @@
 import React from 'react';
 import css from '../ContactList/ContactList.module.css';
 import ContactListItem from './ContactListItem';
-import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/slice';
+import { useSelector } from 'react-redux';
+import { useGetContactsQuery } from '../../contactsApi/contactsApi';
 
 const ContactList = () => {
-  const contacts = useSelector(state => state.contacts);
-  const filter = useSelector(state => state.filter);
-  const dispatch = useDispatch();
+  const { isError, data } = useGetContactsQuery();
 
-  const handleDeleteContact = e => {
-    dispatch(deleteContact(e));
-  };
+  const contacts = data;
+
+  const filter = useSelector(state => state.filter);
 
   const normalizeFilter = filter.toLowerCase();
   const filteredContacts = contacts.filter(contact =>
@@ -19,17 +17,22 @@ const ContactList = () => {
   );
 
   return (
-    <ul className={css.contactsList}>
-      {filteredContacts.map(contact => (
-        <ContactListItem
-          key={contact.id}
-          name={contact.name}
-          number={contact.number}
-          onDeleteContact={handleDeleteContact}
-          id={contact.id}
-        />
-      ))}
-    </ul>
+    <div>
+      {filteredContacts.length === 0 ? (
+        <h2 className={css.titleNotFound}>Contacts not found :(</h2>
+      ) : (
+        <ul className={css.contactsList}>
+          {filteredContacts.map(contact => (
+            <ContactListItem
+              key={contact.id}
+              name={contact.name}
+              phone={contact.phone}
+              id={contact.id}
+            />
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 

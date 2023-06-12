@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useGetContactsQuery } from '../../contactsApi/contactsApi';
 
 const ContactList = () => {
-  const { isError, data } = useGetContactsQuery();
+  const { data } = useGetContactsQuery();
 
   const contacts = data;
 

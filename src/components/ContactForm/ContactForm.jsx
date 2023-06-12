@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import css from '../ContactForm/ContactForm.module.css';
 import { nanoid } from 'nanoid';
 import {
-  useCreateContactMutation,
-  useGetContactsQuery,
+  useAddContactMutation,
+  useFetchContactsQuery,
 } from 'contactsApi/contactsApi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,8 +12,8 @@ export default function ContactForm() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
-  const [createContact] = useCreateContactMutation();
-  const { data: contacts } = useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
+  const { data: contacts } = useFetchContactsQuery();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -59,7 +59,7 @@ export default function ContactForm() {
       return;
     }
 
-    createContact(newContact);
+    addContact(newContact);
     toast.success('Contact added to the phonebook!', {
       position: 'top-right',
       autoClose: 5000,

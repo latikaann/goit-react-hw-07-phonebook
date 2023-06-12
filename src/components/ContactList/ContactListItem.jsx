@@ -1,11 +1,11 @@
 import React from 'react';
 import css from '../ContactList/ContactList.module.css';
-import { useDeleteContactsMutation } from 'contactsApi/contactsApi';
+import { useDeleteContactMutation } from 'contactsApi/contactsApi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ContactListItem = ({ name, phone, id }) => {
-  const [deleteContact, delInfo] = useDeleteContactsMutation();
+  const [deleteContact, delInfo] = useDeleteContactMutation();
 
   const handleDeleteContact = () => {
     deleteContact(id);

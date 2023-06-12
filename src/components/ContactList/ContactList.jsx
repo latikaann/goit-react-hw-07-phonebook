@@ -2,10 +2,11 @@ import React from 'react';
 import css from '../ContactList/ContactList.module.css';
 import ContactListItem from './ContactListItem';
 import { useSelector } from 'react-redux';
-import { useGetContactsQuery } from '../../contactsApi/contactsApi';
+import { useFetchContactsQuery } from '../../contactsApi/contactsApi';
+import Spinner from 'components/Spinner/Spinner';
 
 const ContactList = () => {
-  const { data } = useGetContactsQuery();
+  const { data, isError, isFetching } = useFetchContactsQuery();
 
   const contacts = data || [];
 
@@ -16,21 +17,31 @@ const ContactList = () => {
     contact.name.toLowerCase().includes(normalizeFilter)
   );
 
+  if (isError) {
+    return <div>Error loading contacts.</div>;
+  }
+
   return (
     <div>
-      {filteredContacts.length === 0 ? (
-        <h2 className={css.titleNotFound}>Contacts not found :(</h2>
+      {isFetching ? (
+        <Spinner />
       ) : (
-        <ul className={css.contactsList}>
-          {filteredContacts.map(contact => (
-            <ContactListItem
-              key={contact.id}
-              name={contact.name}
-              phone={contact.phone}
-              id={contact.id}
-            />
-          ))}
-        </ul>
+        <>
+          {filteredContacts.length === 0 ? (
+            <h2 className={css.titleNotFound}>Contacts not found :(</h2>
+          ) : (
+            <ul className={css.contactsList}>
+              {filteredContacts.map(contact => (
+                <ContactListItem
+                  key={contact.id}
+                  name={contact.name}
+                  phone={contact.phone}
+                  id={contact.id}
+                />
+              ))}
+            </ul>
+          )}
+        </>
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import css from '../ContactList/ContactList.module.css';
 import ContactListItem from './ContactListItem';
 import { useSelector } from 'react-redux';
@@ -7,7 +7,7 @@ import { useGetContactsQuery } from '../../contactsApi/contactsApi';
 const ContactList = () => {
   const { data } = useGetContactsQuery();
 
-  const contacts = data;
+  const contacts = data || [];
 
   const filter = useSelector(state => state.filter);
 
